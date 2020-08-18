@@ -17,7 +17,7 @@ positions = [(124, 29), (88, 20), (61, 20), (16, 24), (16, 38), (34, 56), (70, 7
 for input_file in inputs:
     raw_img = face_recognition.load_image_file(os.path.join('input', input_file))
     i = 1
-    while i < 10:
+    while i < 8:
         face_locations = face_recognition.face_locations(raw_img, number_of_times_to_upsample=i)
         if len(face_locations):
             break
@@ -29,16 +29,17 @@ for input_file in inputs:
         frames = []
         for i in range(10):
             parrot_frame = Image.open(os.path.join('.parrot_frames', str(i) + '.tiff'))
+            alpha = parrot_frame.split()[3]
             parrot_frame.paste(face_img, positions[i])
+            parrot_frame = parrot_frame.convert('RGB').convert('P', palette=Image.ADAPTIVE, colors=255)
+            mask = Image.eval(alpha, lambda a: 255 if a <=128 else 0)
+            parrot_frame.paste(255, mask)
             frames.append(parrot_frame)
-            parrot_frame.save(os.path.join('parrots', input_file.split('.')[0] + str(i) + '.png'))
         if count > 0:
-            frames[0].save(os.path.join('parrots', input_file.split('.')[0] + str(count) + '.gif'), 
-                save_all=True, append_images=frames[1:], format="GIF", duration=40)
+            frames[0].save(os.path.join('parrots', input_file.split('.')[0] + str(count) + '.gif') , append_images=frames[1:], format="GIF", duration=40, transparency=255)
         else:
             frames[0].save(os.path.join('parrots', input_file.split('.')[0] + '.gif'), 
-                save_all=True, append_images=frames[1:], format="GIF", duration=40)
+                save_all=True, append_images=frames[1:], format="GIF", duration=40, transparency=255, disposal=2)
         count += 1
-    break
     print(input_file.split()[0] + ' has joined the party!')
 
