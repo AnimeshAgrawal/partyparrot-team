@@ -16,7 +16,7 @@ positions = [(124, 29), (88, 20), (61, 20), (16, 24), (16, 38), (34, 56), (70, 7
 
 for input_file in inputs:
     raw_img = face_recognition.load_image_file(os.path.join('input', input_file))
-    i = 3
+    i = 1
     while i < 10:
         face_locations = face_recognition.face_locations(raw_img, number_of_times_to_upsample=i)
         if len(face_locations):
@@ -33,10 +33,10 @@ for input_file in inputs:
             frames.append(parrot_frame)
         if count > 0:
             frames[0].save(os.path.join('parrots', input_file.split('.')[0] + str(count) + '.gif'), 
-                save_all=True, append_images=frames[1:], format="GIF")
+                save_all=True, append_images=frames[1:], format="GIF", transparency=0)
         else:
             frames[0].save(os.path.join('parrots', input_file.split('.')[0] + '.gif'), 
-                save_all=True, append_images=frames[1:], format="GIF", duration=40)
+                save_all=True, append_images=frames[1:], format="GIF", duration=40, transparency=0)
         count += 1
     print(input_file.split()[0] + ' has joined the party!')
 
