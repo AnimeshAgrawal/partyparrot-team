@@ -31,12 +31,14 @@ for input_file in inputs:
             parrot_frame = Image.open(os.path.join('.parrot_frames', str(i) + '.tiff'))
             parrot_frame.paste(face_img, positions[i])
             frames.append(parrot_frame)
+            parrot_frame.save(os.path.join('parrots', input_file.split('.')[0] + str(i) + '.png'))
         if count > 0:
             frames[0].save(os.path.join('parrots', input_file.split('.')[0] + str(count) + '.gif'), 
-                save_all=True, append_images=frames[1:], format="GIF", transparency=0)
+                save_all=True, append_images=frames[1:], format="GIF", duration=40)
         else:
             frames[0].save(os.path.join('parrots', input_file.split('.')[0] + '.gif'), 
-                save_all=True, append_images=frames[1:], format="GIF", duration=40, transparency=0)
+                save_all=True, append_images=frames[1:], format="GIF", duration=40)
         count += 1
+    break
     print(input_file.split()[0] + ' has joined the party!')
 
