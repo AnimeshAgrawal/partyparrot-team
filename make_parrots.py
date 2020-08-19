@@ -36,10 +36,11 @@ for input_file in inputs:
             parrot_frame.paste(255, mask)
             frames.append(parrot_frame)
         if count > 0:
-            frames[0].save(os.path.join('parrots', input_file.split('.')[0] + str(count) + '.gif') , append_images=frames[1:], format="GIF", duration=40, transparency=255)
+            name = input_file.split('.')[0] + str(count) + '.gif'
         else:
-            frames[0].save(os.path.join('parrots', input_file.split('.')[0] + '.gif'), 
-                save_all=True, append_images=frames[1:], format="GIF", duration=40, transparency=255, disposal=2)
+            name = input_file.split('.')[0] + '.gif'
+        frames[0].save(os.path.join('parrots', name), 
+            save_all=True, append_images=frames[1:], format="GIF", duration=40, transparency=255, disposal=2)
         count += 1
     print(input_file.split()[0] + ' has joined the party!')
 
