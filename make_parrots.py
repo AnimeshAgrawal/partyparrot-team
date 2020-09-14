@@ -1,5 +1,5 @@
 from PIL import Image
-import face_recognition, os 
+import face_recognition, os
 
 supported_types = ('.png', '.jpg', '.jpeg', '.tiff')
 inputs = []
@@ -39,8 +39,8 @@ for input_file in inputs:
             name = input_file.split('.')[0] + str(count) + '.gif'
         else:
             name = input_file.split('.')[0] + '.gif'
-        frames[0].save(os.path.join('parrots', name), 
-            save_all=True, append_images=frames[1:], format="GIF", duration=40, transparency=255, disposal=2)
+        frames[0].save(os.path.join('parrots', name),
+            save_all=True, append_images=frames[1:], format="GIF", duration=40, transparency=255, disposal=2, loop=0)
         count += 1
     print(input_file.split()[0] + ' has joined the party!')
 
